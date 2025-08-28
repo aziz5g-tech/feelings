@@ -3,7 +3,7 @@
 let selectedAvatar = 'avatars/default.svg';
 
 document.addEventListener('DOMContentLoaded', function() {
-    const userSelect = document.getElementById('user-select');
+    const userNameInput = document.getElementById('user-name');
     const problemSelect = document.getElementById('feeling-select');
     const problemDescription = document.getElementById('problem-description');
     const submitBtn = document.getElementById('submit-feeling');
@@ -13,22 +13,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // التحقق من تعبئة الحقول
     function checkFormValidity() {
-        const isValid = userSelect.value && problemSelect.value;
+        const isValid = userNameInput.value.trim() && problemSelect.value;
         submitBtn.disabled = !isValid;
         submitBtn.style.opacity = isValid ? '1' : '0.5';
     }
 
-    userSelect.addEventListener('change', checkFormValidity);
+    userNameInput.addEventListener('input', checkFormValidity);
     problemSelect.addEventListener('change', checkFormValidity);
 
     // إرسال المشكلة
     submitBtn.addEventListener('click', function() {
-        const userName = userSelect.value;
+        const userName = userNameInput.value.trim();
         const problemType = problemSelect.value;
         const description = problemDescription.value.trim();
         
         if (!userName || !problemType) {
             alert('يرجى تعبئة الحقول المطلوبة');
+            return;
+        }
+
+        if (userName.length < 2) {
+            alert('يرجى إدخال اسم صحيح (حرفين على الأقل)');
             return;
         }
 
@@ -44,8 +49,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // الحصول على المشاكل المحفوظة مسبقاً
         let savedProblems = JSON.parse(localStorage.getItem('trainingProblems') || '[]');
         
-        // إضافة المشكلة الجديدة
-        savedProblems.push(problemData);
+        // إضافة المشكلة الجديدة في المقدمة (أحدث أولاً)
+        savedProblems.unshift(problemData);
+        
+        // الاحتفاظ بآخر 50 مشكلة فقط لتجنب امتلاء التخزين
+        if (savedProblems.length > 50) {
+            savedProblems = savedProblems.slice(0, 50);
+        }
         
         // حفظ في localStorage
         localStorage.setItem('trainingProblems', JSON.stringify(savedProblems));

@@ -217,6 +217,82 @@ header p {
     border: 2px dashed #ddd;
 }
 
+/* حقل إدخال الاسم */
+.name-section {
+    margin-bottom: 20px;
+}
+
+.name-section label {
+    display: block;
+    margin-bottom: 8px;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.user-input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    direction: rtl;
+}
+
+.user-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.user-input::placeholder {
+    color: #999;
+}
+
+/* الحركة العمودية للبطاقات */
+.feeling-card {
+    animation: slideUpFade 0.6s ease-out forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+@keyframes slideUpFade {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* عرض المشاكل بشكل عمودي */
+.feelings-slider {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* تحسين شريط التمرير */
+.feelings-slider::-webkit-scrollbar {
+    width: 8px;
+}
+
+.feelings-slider::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.feelings-slider::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 10px;
+}
+
+.feelings-slider::-webkit-scrollbar-thumb:hover {
+    background: #5a6fd8;
+}
+
 .user-selection {
     background: white;
     border-radius: 20px;
@@ -362,12 +438,6 @@ header p {
     font-size: 2rem;
 }
 
-.feelings-slider {
-    height: 100%;
-    overflow: hidden;
-    position: relative;
-}
-
 .feeling-item {
     display: flex;
     align-items: center;
@@ -419,20 +489,6 @@ header p {
     to {
         transform: translateY(0);
         opacity: 1;
-    }
-}
-
-/* تأثير التمرير التلقائي */
-.feelings-slider.scrolling {
-    animation: autoScroll 20s linear infinite;
-}
-
-@keyframes autoScroll {
-    0% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(-50%);
     }
 }
 

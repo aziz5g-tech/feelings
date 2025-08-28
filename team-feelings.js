@@ -18,8 +18,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // تحميل وعرض المشاكل المحفوظة
     displayTrainingProblems();
     
-    // تحديث المشاكل كل 30 ثانية
-    setInterval(displayTrainingProblems, 30000);
+    // تحديث المشاكل كل 10 ثوان لعرض الجديد بسرعة
+    setInterval(displayTrainingProblems, 10000);
+    
+    // الاستماع لتغييرات localStorage من علامات تبويب أخرى
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'trainingProblems') {
+            displayTrainingProblems();
+        }
+    });
 });
 
 function displayTrainingProblems() {
@@ -37,11 +44,17 @@ function displayTrainingProblems() {
         return;
     }
     
+    // ترتيب المشاكل حسب الأحدث (الأحدث أولاً)
+    todayProblems.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    
     problemsSlider.innerHTML = '';
     
-    todayProblems.forEach(problem => {
+    todayProblems.forEach((problem, index) => {
         const problemCard = document.createElement('div');
         problemCard.className = 'feeling-card problem-card';
+        
+        // إضافة delay للحركة العمودية
+        problemCard.style.animationDelay = `${index * 0.2}s`;
         
         const timeAgo = getTimeAgo(problem.timestamp);
         
@@ -82,13 +95,15 @@ function getProblemEmoji(problemType) {
 
 function getTimeAgo(timestamp) {
     const now = new Date();
-    const feelingTime = new Date(timestamp);
-    const diffMs = now - feelingTime;
+    const problemTime = new Date(timestamp);
+    const diffMs = now - problemTime;
     const diffMins = Math.floor(diffMs / 60000);
     const diffHours = Math.floor(diffMins / 60);
+    const diffDays = Math.floor(diffHours / 24);
     
     if (diffMins < 1) return 'الآن';
     if (diffMins < 60) return `منذ ${diffMins} دقيقة`;
     if (diffHours < 24) return `منذ ${diffHours} ساعة`;
-    return feelingTime.toLocaleDateString('ar-SA');
+    if (diffDays === 1) return 'أمس';
+    return `منذ ${diffDays} أيام`;
 }
