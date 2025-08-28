@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شارك مشاعرك</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎭 كيف تشعر اليوم؟</h1>
+            <p>اختر اسمك وشاركنا شعورك اليومي</p>
+            <a href="index.html" class="back-btn">← العودة لمشاعر الفريق</a>
+        </header>
+
+        <div class="user-selection">
+            <div class="avatar-container">
+                <img id="selected-avatar" src="avatars/default.svg" alt="الافتار المختار" class="current-avatar">
+                <button id="change-avatar-btn" class="change-avatar-btn">تغيير الافتار</button>
+            </div>
+            
+            <div class="user-form">
+                <select id="user-select" class="user-dropdown">
+                    <option value="">اختر اسمك</option>
+                    <option value="أحمد">أحمد</option>
+                    <option value="فاطمة">فاطمة</option>
+                    <option value="محمد">محمد</option>
+                    <option value="عائشة">عائشة</option>
+                    <option value="عمر">عمر</option>
+                    <option value="خديجة">خديجة</option>
+                    <option value="علي">علي</option>
+                    <option value="مريم">مريم</option>
+                </select>
+
+                <div class="feeling-section">
+                    <label for="feeling-select">كيف تشعر اليوم؟</label>
+                    <select id="feeling-select" class="feeling-dropdown">
+                        <option value="">اختر شعورك</option>
+                        <option value="متحمس">😃 متحمس</option>
+                        <option value="سعيد">😊 سعيد</option>
+                        <option value="هادئ">😌 هادئ</option>
+                        <option value="متململ">😐 متململ</option>
+                        <option value="متعب">😴 متعب</option>
+                        <option value="قلق">😰 قلق</option>
+                        <option value="غير واثق">😕 غير واثق</option>
+                        <option value="محبط">😞 محبط</option>
+                        <option value="غاضب">😠 غاضب</option>
+                        <option value="مندهش">😲 مندهش</option>
+                    </select>
+                </div>
+
+                <button id="submit-feeling" class="submit-btn" disabled>شارك شعورك</button>
+            </div>
+        </div>
+
+        <!-- نافذة اختيار الافتار -->
+        <div id="avatar-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>اختر افتارك</h3>
+                <div class="avatar-grid">
+                    <div class="avatar-option" data-avatar="avatar1.svg">
+                        <img src="avatars/avatar1.svg" alt="افتار 1">
+                    </div>
+                    <div class="avatar-option" data-avatar="avatar2.svg">
+                        <img src="avatars/avatar2.svg" alt="افتار 2">
+                    </div>
+                    <div class="avatar-option" data-avatar="avatar3.svg">
+                        <img src="avatars/avatar3.svg" alt="افتار 3">
+                    </div>
+                    <div class="avatar-option" data-avatar="avatar4.svg">
+                        <img src="avatars/avatar4.svg" alt="افتار 4">
+                    </div>
+                    <div class="avatar-option" data-avatar="avatar5.svg">
+                        <img src="avatars/avatar5.svg" alt="افتار 5">
+                    </div>
+                    <div class="avatar-option" data-avatar="avatar6.svg">
+                        <img src="avatars/avatar6.svg" alt="افتار 6">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- رسالة النجاح -->
+        <div id="success-modal" class="modal">
+            <div class="modal-content success-content">
+                <h3>✅ تم حفظ مشاعرك بنجاح!</h3>
+                <p>شكراً لك على مشاركتك</p>
+                <button onclick="goToTeamFeelings()" class="success-btn">مشاهدة مشاعر الفريق</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="add-feeling.js"></script>
+</body>
+</html>
