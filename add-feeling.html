@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شارك مشاعرك</title>
+    <title>شارك مشكلتك في التدريب</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🎭 كيف تشعر اليوم؟</h1>
-            <p>اختر اسمك وشاركنا شعورك اليومي</p>
-            <a href="index.html" class="back-btn">← العودة لمشاعر الفريق</a>
+            <h1>🔧 ما هي المشكلة التي تواجهها؟</h1>
+            <p>اختر اسمك وشاركنا التحدي الذي تواجهه في التدريب</p>
+            <a href="index.html" class="back-btn">← العودة لمشاكل الفريق</a>
         </header>
 
         <div class="user-selection">
@@ -24,34 +24,41 @@
             <div class="user-form">
                 <select id="user-select" class="user-dropdown">
                     <option value="">اختر اسمك</option>
-                    <option value="أحمد">أحمد</option>
-                    <option value="فاطمة">فاطمة</option>
-                    <option value="محمد">محمد</option>
-                    <option value="عائشة">عائشة</option>
-                    <option value="عمر">عمر</option>
-                    <option value="خديجة">خديجة</option>
-                    <option value="علي">علي</option>
-                    <option value="مريم">مريم</option>
+                    <option value="أحمد محمد">أحمد محمد</option>
+                    <option value="فاطمة علي">فاطمة علي</option>
+                    <option value="محمد عبدالله">محمد عبدالله</option>
+                    <option value="نورا أحمد">نورا أحمد</option>
+                    <option value="عمر حسن">عمر حسن</option>
+                    <option value="سارة محمود">سارة محمود</option>
+                    <option value="يوسف إبراهيم">يوسف إبراهيم</option>
+                    <option value="مريم سالم">مريم سالم</option>
+                    <option value="عبدالرحمن فهد">عبدالرحمن فهد</option>
+                    <option value="هند عمر">هند عمر</option>
                 </select>
 
                 <div class="feeling-section">
-                    <label for="feeling-select">كيف تشعر اليوم؟</label>
+                    <label for="feeling-select">ما نوع المشكلة التي تواجهها؟</label>
                     <select id="feeling-select" class="feeling-dropdown">
-                        <option value="">اختر شعورك</option>
-                        <option value="متحمس">😃 متحمس</option>
-                        <option value="سعيد">😊 سعيد</option>
-                        <option value="هادئ">😌 هادئ</option>
-                        <option value="متململ">😐 متململ</option>
-                        <option value="متعب">😴 متعب</option>
-                        <option value="قلق">😰 قلق</option>
-                        <option value="غير واثق">😕 غير واثق</option>
-                        <option value="محبط">😞 محبط</option>
-                        <option value="غاضب">😠 غاضب</option>
-                        <option value="مندهش">😲 مندهش</option>
+                        <option value="">اختر نوع المشكلة</option>
+                        <option value="فهم المطلوب">🤔 صعوبة في فهم المطلوب من التحدي</option>
+                        <option value="خطأ في الكود">� خطأ في الكود لا أستطيع حله</option>
+                        <option value="اختيار الخوارزمية">⚡ لا أعرف أي خوارزمية أستخدم</option>
+                        <option value="تعقيد الوقت">⏱️ مشكلة في تحسين تعقيد الوقت</option>
+                        <option value="تعقيد المساحة">� مشكلة في تحسين تعقيد المساحة</option>
+                        <option value="البيانات الكبيرة">� التعامل مع البيانات الكبيرة</option>
+                        <option value="الحالات الحدية">🎯 تحديد الحالات الحدية</option>
+                        <option value="هياكل البيانات">🏗️ اختيار هيكل البيانات المناسب</option>
+                        <option value="تصحيح الأخطاء">� صعوبة في تصحيح الأخطاء</option>
+                        <option value="إدارة الوقت">⌛ إدارة الوقت أثناء الحل</option>
                     </select>
                 </div>
 
-                <button id="submit-feeling" class="submit-btn" disabled>شارك شعورك</button>
+                <div class="problem-description">
+                    <label for="problem-description">وصف المشكلة (اختياري)</label>
+                    <textarea id="problem-description" class="problem-textarea" placeholder="اكتب تفاصيل أكثر عن المشكلة التي تواجهها..."></textarea>
+                </div>
+
+                <button id="submit-feeling" class="submit-btn" disabled>شارك مشكلتك</button>
             </div>
         </div>
 
@@ -86,9 +93,9 @@
         <!-- رسالة النجاح -->
         <div id="success-modal" class="modal">
             <div class="modal-content success-content">
-                <h3>✅ تم حفظ مشاعرك بنجاح!</h3>
-                <p>شكراً لك على مشاركتك</p>
-                <button onclick="goToTeamFeelings()" class="success-btn">مشاهدة مشاعر الفريق</button>
+                <h3>✅ تم حفظ مشكلتك بنجاح!</h3>
+                <p>شكراً لك على المشاركة، سنساعدك في حل هذه المشكلة</p>
+                <button onclick="goToTeamFeelings()" class="success-btn">مشاهدة مشاكل الفريق</button>
             </div>
         </div>
     </div>

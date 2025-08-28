@@ -1,82 +1,83 @@
-// JavaScript لصفحة مشاعر الفريق مع الباركود
+// JavaScript لصفحة مشاكل التدريب مع الباركود
 
 // إنشاء الباركود
 document.addEventListener('DOMContentLoaded', function() {
-    // الحصول على الرابط الكامل لصفحة إضافة المشاعر
-    const addFeelingUrl = window.location.origin + window.location.pathname.replace('index.html', '') + 'add-feeling.html';
+    // الحصول على الرابط الكامل لصفحة إضافة المشاكل
+    const addProblemUrl = window.location.origin + window.location.pathname.replace('index.html', '') + 'add-feeling.html';
     
     // إنشاء الباركود باستخدام Google Charts API
     const qrDiv = document.getElementById('qrcode');
     const qrImage = document.createElement('img');
-    qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(addFeelingUrl)}`;
-    qrImage.alt = 'QR Code لمشاركة المشاعر';
+    qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(addProblemUrl)}`;
+    qrImage.alt = 'QR Code لمشاركة المشاكل';
     qrImage.style.border = '3px solid #f8f9fa';
     qrImage.style.borderRadius = '15px';
     qrImage.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
     qrDiv.appendChild(qrImage);
 
-    // تحميل وعرض المشاعر المحفوظة
-    displayTeamFeelings();
+    // تحميل وعرض المشاكل المحفوظة
+    displayTrainingProblems();
     
-    // تحديث المشاعر كل 30 ثانية
-    setInterval(displayTeamFeelings, 30000);
+    // تحديث المشاكل كل 30 ثانية
+    setInterval(displayTrainingProblems, 30000);
 });
 
-function displayTeamFeelings() {
-    const feelingsSlider = document.getElementById('feelings-slider');
-    const savedFeelings = JSON.parse(localStorage.getItem('teamFeelings') || '[]');
+function displayTrainingProblems() {
+    const problemsSlider = document.getElementById('feelings-slider');
+    const savedProblems = JSON.parse(localStorage.getItem('trainingProblems') || '[]');
     
-    // تصفية المشاعر لليوم الحالي فقط
+    // تصفية المشاكل لليوم الحالي فقط
     const today = new Date().toDateString();
-    const todayFeelings = savedFeelings.filter(feeling => 
-        new Date(feeling.timestamp).toDateString() === today
+    const todayProblems = savedProblems.filter(problem => 
+        new Date(problem.timestamp).toDateString() === today
     );
     
-    if (todayFeelings.length === 0) {
-        feelingsSlider.innerHTML = '<div class="no-feelings">لا توجد مشاعر مشاركة اليوم بعد</div>';
+    if (todayProblems.length === 0) {
+        problemsSlider.innerHTML = '<div class="no-feelings">لا توجد مشاكل مشاركة اليوم بعد</div>';
         return;
     }
     
-    feelingsSlider.innerHTML = '';
+    problemsSlider.innerHTML = '';
     
-    todayFeelings.forEach(feeling => {
-        const feelingCard = document.createElement('div');
-        feelingCard.className = 'feeling-card';
+    todayProblems.forEach(problem => {
+        const problemCard = document.createElement('div');
+        problemCard.className = 'feeling-card problem-card';
         
-        const timeAgo = getTimeAgo(feeling.timestamp);
+        const timeAgo = getTimeAgo(problem.timestamp);
         
-        feelingCard.innerHTML = `
+        problemCard.innerHTML = `
             <div class="feeling-header">
-                <img src="${feeling.avatar}" alt="افتار ${feeling.name}" class="feeling-avatar">
+                <img src="${problem.avatar}" alt="افتار ${problem.name}" class="feeling-avatar">
                 <div class="feeling-info">
-                    <h4>${feeling.name}</h4>
+                    <h4>${problem.name}</h4>
                     <span class="feeling-time">${timeAgo}</span>
                 </div>
             </div>
             <div class="feeling-content">
-                <span class="feeling-emoji">${getFeelingEmoji(feeling.feeling)}</span>
-                <span class="feeling-text">${feeling.feeling}</span>
+                <span class="feeling-emoji">${getProblemEmoji(problem.problemType)}</span>
+                <span class="feeling-text">${problem.problemType}</span>
             </div>
+            ${problem.description ? `<div class="problem-description-display">${problem.description}</div>` : ''}
         `;
         
-        feelingsSlider.appendChild(feelingCard);
+        problemsSlider.appendChild(problemCard);
     });
 }
 
-function getFeelingEmoji(feeling) {
+function getProblemEmoji(problemType) {
     const emojiMap = {
-        'متحمس': '😃',
-        'سعيد': '😊',
-        'هادئ': '😌',
-        'متململ': '😐',
-        'متعب': '😴',
-        'قلق': '😰',
-        'غير واثق': '😕',
-        'محبط': '😞',
-        'غاضب': '😠',
-        'مندهش': '😲'
+        'فهم المطلوب': '🤔',
+        'خطأ في الكود': '�',
+        'اختيار الخوارزمية': '⚡',
+        'تعقيد الوقت': '⏱️',
+        'تعقيد المساحة': '�',
+        'البيانات الكبيرة': '�',
+        'الحالات الحدية': '🎯',
+        'هياكل البيانات': '🏗️',
+        'تصحيح الأخطاء': '�',
+        'إدارة الوقت': '⌛'
     };
-    return emojiMap[feeling] || '😊';
+    return emojiMap[problemType] || '�';
 }
 
 function getTimeAgo(timestamp) {

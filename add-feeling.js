@@ -1,10 +1,11 @@
-// JavaScript لصفحة إضافة المشاعر
+// JavaScript لصفحة إضافة المشاكل في التدريب
 
 let selectedAvatar = 'avatars/default.svg';
 
 document.addEventListener('DOMContentLoaded', function() {
     const userSelect = document.getElementById('user-select');
-    const feelingSelect = document.getElementById('feeling-select');
+    const problemSelect = document.getElementById('feeling-select');
+    const problemDescription = document.getElementById('problem-description');
     const submitBtn = document.getElementById('submit-feeling');
     const changeAvatarBtn = document.getElementById('change-avatar-btn');
     const avatarModal = document.getElementById('avatar-modal');
@@ -12,40 +13,42 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // التحقق من تعبئة الحقول
     function checkFormValidity() {
-        const isValid = userSelect.value && feelingSelect.value;
+        const isValid = userSelect.value && problemSelect.value;
         submitBtn.disabled = !isValid;
         submitBtn.style.opacity = isValid ? '1' : '0.5';
     }
 
     userSelect.addEventListener('change', checkFormValidity);
-    feelingSelect.addEventListener('change', checkFormValidity);
+    problemSelect.addEventListener('change', checkFormValidity);
 
-    // إرسال المشاعر
+    // إرسال المشكلة
     submitBtn.addEventListener('click', function() {
         const userName = userSelect.value;
-        const userFeeling = feelingSelect.value;
+        const problemType = problemSelect.value;
+        const description = problemDescription.value.trim();
         
-        if (!userName || !userFeeling) {
-            alert('يرجى تعبئة جميع الحقول');
+        if (!userName || !problemType) {
+            alert('يرجى تعبئة الحقول المطلوبة');
             return;
         }
 
-        // حفظ المشاعر في localStorage
-        const feelingData = {
+        // حفظ المشكلة في localStorage
+        const problemData = {
             name: userName,
-            feeling: userFeeling,
+            problemType: problemType,
+            description: description,
             avatar: selectedAvatar,
             timestamp: new Date().toISOString()
         };
 
-        // الحصول على المشاعر المحفوظة مسبقاً
-        let savedFeelings = JSON.parse(localStorage.getItem('teamFeelings') || '[]');
+        // الحصول على المشاكل المحفوظة مسبقاً
+        let savedProblems = JSON.parse(localStorage.getItem('trainingProblems') || '[]');
         
-        // إضافة المشاعر الجديدة
-        savedFeelings.push(feelingData);
+        // إضافة المشكلة الجديدة
+        savedProblems.push(problemData);
         
         // حفظ في localStorage
-        localStorage.setItem('teamFeelings', JSON.stringify(savedFeelings));
+        localStorage.setItem('trainingProblems', JSON.stringify(savedProblems));
 
         // عرض رسالة النجاح
         showSuccessMessage();
